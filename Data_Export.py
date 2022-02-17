@@ -33,7 +33,7 @@ import os
 import shutil
 
 def ExportData(count):   
-    # Connect to Dealcloud
+    # Connect to DataSource
     PATH = 'C:\\Users\\christian.taylor\\Northshore_Scripts\\chromedriver.exe'
     options = Options()
     options.add_argument('--no-sandbox')
@@ -114,7 +114,7 @@ def ExportData(count):
     EC.presence_of_element_located((By.XPATH, "/html/body/div[30]/div/div/div[1]")))
     element.click()
     
-    # Verify files and move to S Drive
+    # Verify files were correctly downloaded and move to data warehouse for processing
     files = sorted(os.listdir(downloadPath), key=lambda x: os.path.getctime(os.path.join(downloadPath, x)))
     dealcloud_files=files[-4:]
    
