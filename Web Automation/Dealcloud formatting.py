@@ -105,69 +105,6 @@ worksheet.set_column(0, max_col - 1, 12)
 writer.save()
 
 
-def DealCloudFormat(File_Name,C):
-    writer = pd.ExcelWriter(File_Name, engine='xlsxwriter')
-
-    # Write the dataframe data to XlsxWriter. Turn off the default header and
-    # index and skip one row to allow us to insert a user defined header.
-    C.to_excel(writer, sheet_name='Sheet1', startrow=1, header=False, index=False)
-
-    # Get the xlsxwriter workbook and worksheet objects.
-    workbook = writer.book
-    worksheet = writer.sheets['Sheet1']
-
-    # Get the dimensions of the dataframe.
-    (max_row, max_col) = C.shape
-
-    # Create a list of column headers, to use in add_table().
-    column_settings = [{'header': column} for column in C.columns]
-
-    # Add the Excel table structure. Pandas will add the data.
-    worksheet.add_table(0, 0, max_row, max_col - 1, {'columns': column_settings})
-
-    # Make the columns wider for clarity.
-    worksheet.set_column(0, max_col - 1, 12)
-
-# Close the Pandas Excel writer and output the Excel file.
-    writer.save()
-DealCloudFormat('Prop_Company_Import_ML.xlsx',C)
-
-#contact_col={'Company Name':'Company','Work Address 1':'Address','Work City':'City','Email Address':'Email','Work State':'State','Work Phone':'Business Phone','Title':'Job Title'}
-#company=company.rename(columns=contact_col)
-#Contact.transpose().merge(company.transpose(),how='left',left_index=True,right_index=True).transpose().to_csv('Contacts.csv')
-
-
-# In[54]:
-
-
-
-def DealCloudFormat(File_Name,C):
-    writer = pd.ExcelWriter(File_Name, engine='xlsxwriter')
-
-    # Write the dataframe data to XlsxWriter. Turn off the default header and
-    # index and skip one row to allow us to insert a user defined header.
-    C.to_excel(writer, sheet_name='Sheet1', startrow=1, header=False, index=False)
-
-    # Get the xlsxwriter workbook and worksheet objects.
-    workbook = writer.book
-    worksheet = writer.sheets['Sheet1']
-
-    # Get the dimensions of the dataframe.
-    (max_row, max_col) = C.shape
-
-    # Create a list of column headers, to use in add_table().
-    column_settings = [{'header': column} for column in C.columns]
-
-    # Add the Excel table structure. Pandas will add the data.
-    worksheet.add_table(0, 0, max_row, max_col - 1, {'columns': column_settings})
-
-    # Make the columns wider for clarity.
-    worksheet.set_column(0, max_col - 1, 12)
-
-# Close the Pandas Excel writer and output the Excel file.
-    writer.save()
-
-
 
     #Standardizes Names of Companies to Avoid loading duplicate entries to the database.
 def ColesceCompanies(company,column_name):
@@ -197,26 +134,6 @@ ColesceCompanies(ML_DealCloud,'Originator')
 ColesceCompanies(ML_DealCloud,'Tax Credit Investor')
 DealCloudFormat('Loan Import ML12.xlsx', ML_DealCloud)
 
-
-# In[215]:
-
-
-fuzz.token_set_ratio("Housing Partnership Network", "Housing Partnership Equity Trust")
-
-
-# In[51]:
-
-
-company['Company'].isin(Sponsors)
-
-
-# In[73]:
-
-
-
-
-
-# In[81]:
 
 
 import pandas as pd
