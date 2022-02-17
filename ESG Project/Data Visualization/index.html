@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8/" >
+		<title>ESG Comparative Analysis</title>
+    
+
+		<!-- Google fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+		<!-- D3.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+		
+		<style>
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #666;
+  margin-right: 5px;
+  font-family: Arial, sans-serif;
+  overflow: auto;
+  border-radius: 3px;
+}
+			body {
+				font-family: 'Open Sans', sans-serif;
+				font-size: 15px;
+				font-weight: 600;
+				fill: #242424;
+				text-align: center;
+				text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+				cursor: default;
+			}
+			
+			
+			
+			.tooltip {
+				fill: #333333;
+			}
+		</style>
+
+</head>
+<body>
+   <div> <svg id="title" height=300 width=450></svg></svg></div>
+    <div class="radarChart"></div>
+    
+    <div> <svg id="my_dataviz" height=300 width=450  viewBox="0 -100 200 200" ></svg></svg></div>
+    <script src="radarChart.js"></script>	
+    <script>
+  
+  
+        ////////////////////////////////////////////////////////////// 
+        //////////////////////// Set-Up ////////////////////////////// 
+        ////////////////////////////////////////////////////////////// 
+
+        var margin = {top: 100, right: 100, bottom: 100, left: 100},
+            width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
+            height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+                
+        ////////////////////////////////////////////////////////////// 
+        ////////////////////////// Data ////////////////////////////// 
+        ////////////////////////////////////////////////////////////// 
+    
+
+      
+        var data = [
+                  [//255 State
+                    {axis:"Environment",value:7.56},
+                    {axis:"Inclusivity",value:1.74},
+                    {axis:"Affordability Need",value:2.94},
+                    {axis:"Housing Quality Need",value:4.98},
+                    {axis:"Community",value:8.60}
+                    		
+                  ],[//Livingston Place
+                    {axis:"Environment",value:9.72},
+                    {axis:"Inclusivity",value:5.94},
+                    {axis:"Affordability Need",value:6.68},
+                    {axis:"Housing Quality Need",value:6.72},
+                    {axis:"Community",value: 4.3}
+                  ],
+                ];
+        ////////////////////////////////////////////////////////////// 
+        //////////////////// Draw the Chart ////////////////////////// 
+        ////////////////////////////////////////////////////////////// 
+
+        var color = d3.scale.ordinal()
+            .range(["#92d7e7","#ff77ff"]);
+            
+        var radarChartOptions = {
+          w: width,
+          h: height,
+          margin: margin,
+          maxValue: 10.0,
+          levels: 5,
+          roundStrokes: true,
+          color: color,
+          
+        };
+        //Call function to draw the Radar chart
+        RadarChart(".radarChart", data, radarChartOptions);
+
+        var svg = d3.select("#my_dataviz")
+
+        svg.append("circle").attr("cx",80).attr("cy",-90).attr("r", 4).style("fill", "#92d7e7")
+        svg.append("circle").attr("cx",80).attr("cy",-70).attr("r", 4).style("fill", "#ff77ff")
+svg.append("text").attr("x", 90).attr("y", -90).text("255 State").style("font-size", "11px").attr("alignment-baseline","middle")
+svg.append("text").attr("x", 90).attr("y", -70).text("Livingston Place").style("font-size", "11px").attr("alignment-baseline","middle");
+
+var svg = d3.select("#title")
+svg.append("text")
+        .attr("x",50)             
+        .attr("y", 180)
+        .attr("alignment-baseline","middle")  
+        .style("font-size", "30px") 
+        .text("ESG Comparative Analysis");
+    </script>
+</body>
+</html>
