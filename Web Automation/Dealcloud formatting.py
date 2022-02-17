@@ -148,26 +148,6 @@ p['Property Name']=p['Property Name'].str.strip()
 sub['Property Name']=sub['Property Name'].str.strip()
 
 
-def ColesceCompanies(company,column_name):
-    company[column_name]=[x[0] for x in company[column_name].str.split(';',1)]
-    company[column_name]=[x[0] for x in company[column_name].str.split(',',1)]
-    company[column_name]=company[column_name].str.replace(r'([^a-zA-Z\s]+?)',"",regex=True)
-    company[column_name]=company[column_name].str.replace('.',"")
-    company[column_name]=company[column_name].str.replace(' LLC',"")
-    company[column_name]=company[column_name].str.replace(' LLP',"")
-    company[column_name]=company[column_name].str.replace('  '," ",regex=True)
-    company[column_name]=company[column_name].str.strip()
-    Companies = company[column_name].tolist()
-ColesceCompanies(mgmt,'Property Management Company')
-f=p.merge(sub,how='left',on='Property Name')
-f=f.drop(columns=['Description of Regulatory Agreement and Rental Subsidy_x','HAP Contract Expiration Date_x','Rental Subsidy Type_x'])
-f.columns=[x.replace('_y','') for x in f.columns.tolist()]
-DealCloudFormat('ML Property Import.xlsx',f)
-
-
-
-# In[33]:
-
 
 fa=pd.read_excel('Property Import CalHFANFA.xlsx')
 fa_sponsors = pd.DataFrame(fa['Tax Credit Syndicator Name'].str.strip().drop_duplicates())
