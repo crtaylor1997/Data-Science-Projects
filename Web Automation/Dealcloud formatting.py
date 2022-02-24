@@ -2,14 +2,16 @@
 # coding: utf-8
 
 # In[2]:
-
+#This alggorythm takes monthly data file, and transforms them into the correct shape to be uploaded to 
 
 import pandas as pd
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 import statistics
 import numpy as np
+
 #Uses Levenshtein distance formula to match column names that are not exactly the same.
+
 dealcloud_loan=pd.read_csv('Loan Import Template.csv')
 loans=pd.read_excel('ML12 Red Data Tape 11.8.2021.xlsm')
 loans=loans.dropna(axis=0,how='all')
@@ -31,6 +33,7 @@ for i in list2:
         
     y = process.extractOne(i,list1, scorer=fuzz.partial_token_set_ratio)
     
+  #Weighted averages of two ratios
     print(i,x,y)
     a=(0.8*x[1]+0.2*y[1])
     if (a>threshold):
@@ -44,23 +47,15 @@ for j in mat1:
     p = []
 mat1 = [list(x) for x in mat1]
 mat1=[[x[0],x[1][0],x[1][1]] for x in mat1]
-print(mat1)
 
+# Creates Pandas dataframe with each match and similarity score
 df = pd.DataFrame(mat1, columns=['ML Column', 'DC Column', 'Score'])
 df
 #Saves the Column Matches to a CSV file.
 df.to_csv('Column Matches ML12 Loan.csv')
 
 
-# In[58]:
-
-
-import pandas as pd
-from fuzzywuzzy import fuzz
-from fuzzywuzzy import process
-import statistics
-import numpy as np
-
+#Loads in Column Matches, sets some constant fields, then flips rows and columns of Dataframes, performs a left join on the column names, and then flips rows and columns back in place.
 columns=pd.read_csv('Column Matches ML Property.csv')
 dealcloud=columns['DC Column'].tolist()
 ML=columns['ML Column'].tolist()
@@ -74,35 +69,37 @@ ML_DealCloud['Loan Type']='Tax-Exempt'
 ML_DealCloud['Subordinate Debt Flag']=np.where(ML_DealCloud['Subordinate Debt Flag']=='N','No','Yes')
 ML_DealCloud['Deal']='ML12'
 ML_DealCloud['Securitization']='ML12 - Freddie Mac'
-#Splits a list of numbers seperated by Semicolons and Sums them.
 
+#Splits a list of numbers seperated by Semicolons and Sums them.
 ML_DealCloud['Subordinate Debt Amount']=[x.split(';') if type(x) == str else x for x in ML_DealCloud['Subordinate Debt Amount'] ]
 ML_DealCloud['Subordinate Debt Amount']=[sum(map(float,map(lambda y: y.replace(',',''), x))) if type(x) == list else x for x in ML_DealCloud['Subordinate Debt Amount'].tolist()]
-# Create a Pandas Excel writer using XlsxWriter as the engine.
-writer = pd.ExcelWriter('Loan Import ML12.xlsx', engine='xlsxwriter')
 
-# Write the dataframe data to XlsxWriter. Turn off the default header and
-# index and skip one row to allow us to insert a user defined header.
-ML_DealCloud.to_excel(writer, sheet_name='Sheet1', startrow=1, header=False, index=False)
+def DealCloudFormat:(df, name)
+  # Create a Pandas Excel writer using XlsxWriter as the engine.
+  writer = pd.ExcelWriter(name, engine='xlsxwriter')
 
-# Get the xlsxwriter workbook and worksheet objects.
-workbook = writer.book
-worksheet = writer.sheets['Sheet1']
+  # Write the dataframe data to XlsxWriter. Turn off the default header and
+  # index and skip one row to allow us to insert a user defined header.
+  ML_DealCloud.to_excel(writer, sheet_name='Sheet1', startrow=1, header=False, index=False)
 
-# Get the dimensions of the dataframe.
-(max_row, max_col) = ML_DealCloud.shape
+  # Get the xlsxwriter workbook and worksheet objects.
+  workbook = writer.book
+  worksheet = writer.sheets['Sheet1']
 
-# Create a list of column headers, to use in add_table().
-column_settings = [{'header': column} for column in ML_DealCloud.columns]
+  # Get the dimensions of the dataframe.
+  (max_row, max_col) = df.shape
 
-# Add the Excel table structure. Pandas will add the data.
-worksheet.add_table(0, 0, max_row, max_col - 1, {'columns': column_settings})
+  # Create a list of column headers, to use in add_table().
+  column_settings = [{'header': column} for column in df.columns]
 
-# Make the columns wider for clarity.
-worksheet.set_column(0, max_col - 1, 12)
+  # Add the Excel table structure. Pandas will add the data.
+  worksheet.add_table(0, 0, max_row, max_col - 1, {'columns': column_settings})
 
-# Close the Pandas Excel writer and output the Excel file.
-writer.save()
+  # Make the columns wider for clarity.
+  worksheet.set_column(0, max_col - 1, 12)
+
+  # Close the Pandas Excel writer and output the Excel file.
+  writer.save()
 
 
 
@@ -133,31 +130,6 @@ ColesceCompanies(ML_DealCloud,'Sponsor')
 ColesceCompanies(ML_DealCloud,'Originator')
 ColesceCompanies(ML_DealCloud,'Tax Credit Investor')
 DealCloudFormat('Loan Import ML12.xlsx', ML_DealCloud)
-
-
-
-import pandas as pd
-from fuzzywuzzy import fuzz
-from fuzzywuzzy import process
-import statistics
-import numpy as np
-sub=pd.read_csv('C:\\Users\\christian.taylor\\Dealcloud\\ASR\\Subsides_ML.csv')
-sub=sub[['Property Name','Description of Regulatory Agreement and Rental Subsidy','HAP Contract Expiration Date','Rental Subsidy Type']]
-p=pd.read_excel('Property_Import_ML.xlsx')
-p['Property Name']=p['Property Name'].str.strip()
-sub['Property Name']=sub['Property Name'].str.strip()
-
-
-
-fa=pd.read_excel('Property Import CalHFANFA.xlsx')
-fa_sponsors = pd.DataFrame(fa['Tax Credit Syndicator Name'].str.strip().drop_duplicates())
-fa_sponsors=fa_sponsors.rename(columns={'Tax Credit Syndicator Name':'Company Name'})
-fa_sponsors['Type'] = 'Investor'
-fa_sponsors['Sub-Type']='Tax Credit Syndicator'
-c=pd.read_csv('Company Import Template.csv')
-FA_Sponsors=c.transpose().merge(fa_sponsors.transpose(),how='left',left_index=True,right_index=True).transpose()
-DealCloudFormat('FA_Tax Credit Syndicators.xlsx',FA_Sponsors)
-FA_Sponsors
 
 
 
