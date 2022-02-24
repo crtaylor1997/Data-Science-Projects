@@ -14,8 +14,8 @@ import pandas as pd
 from datetime import datetime
 from fuzzywuzzy import fuzz
 import re
-loan=pd.read_excel('S://DealCloud//Data Export//Loan.xlsx')
-prop=pd.read_excel('S://DealCloud//Data Export//Property.xlsx')
+loan=pd.read_excel('Loan.xlsx')
+prop=pd.read_excel('Property.xlsx')
 columns=pd.read_excel('Column Matches CREFC.xlsx')
 dealcloud=columns['Dealcloud'].tolist()
 CREFC=columns['CREFC'].tolist()
@@ -90,42 +90,6 @@ worksheet.set_column(0, max_col - 1, 12)
 writer.save()
 
 
-# In[21]:
-
-
-
-
-
-# In[196]:
-
-
-CREFC_DealCloud = CREFC_DealCloud.iloc[CREFC_DealCloud.isnull().sum(1).sort_values(ascending=True).index].set_index('Prospectus Loan ID')
-CREFC_DealCloud.groupby(CREFC_DealCloud.index).bfill()
-
-
-# In[6]:
-
-
-df=CREFC_DealCloud.loc[CREFC_DealCloud.loc[CREFC_DealCloud.index.duplicated()].index.tolist()].fillna(0)
-date=df[date_columns]
-date=date[date['Current Occupancy Date']!=0]
-dups=df.groupby(df.index).sum().replace(0,'').merge(date,left_index=True,right_index=True)
-pd.concat([dups,CREFC_DealCloud.drop(CREFC_DealCloud.loc[CREFC_DealCloud.index.duplicated()].index.tolist())])
-
-
-# In[25]:
-
-
-CREFC.head(50)
-
-
-# In[28]:
-
-
-properties.drop_duplicates(subset='Loan')
-
-
-# In[ ]:
 
 
 
