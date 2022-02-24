@@ -3,6 +3,8 @@
 
 # In[2]:
 
+# This Program uses selenium to automate Chrome to naviigate to a website, use a drop down menu to extract navigate to links showing an unexportable table with raw data.
+# Using Beautful Soup and the data link, these tables are scraped and saved into CSV files that can be manipulated using Pandas and MS Excel.
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -26,6 +28,7 @@ import itertools as it
 
 # In[1]:
 
+#logs into website
 
 PATH = 'C:\\Users\\christian.taylor\\northshore_Scripts\\chromedriver.exe'
 
@@ -34,8 +37,8 @@ chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument("start-maximized")
 driver = webdriver.Chrome(PATH,chrome_options=chrome_options)
 driver.get('https://systima.northshoresystems.com/NorthshoreWeb/Default.aspx')
-USERNAME = ("ryanp")
-PASSWORD = ("Systima1!")
+USERNAME = ("")
+PASSWORD = ("")
 option = driver.find_element_by_id('TB_UserName')
 script=option.get_attribute('onBlur')
 print(script)
@@ -45,6 +48,7 @@ driver.execute_script(script)
 
 # In[13]:
 
+#This fucntion find elements of the webpage where data is stored, scrapes it and stores it in a Pandas dataframe that is saved as a CSV
 
 def formatCashFlows(link,deal):    
     driver.get(link)
@@ -62,6 +66,8 @@ def formatCashFlows(link,deal):
             row.append(td.text)
         #print(td.text)
         rows_index_lst.append(row)
+       # Locates the data Tables
+    
     t2=soup.find("table",id="FpSpread1_viewport")    
     rows_lst=[]
     trs2=t2.find_all('tr')
@@ -103,14 +109,18 @@ def formatCashFlows(link,deal):
                 if(tdclass2==['s0s2']):
                 #t=td.find('table')     
                     select=td.find("select")
+                    # Extract text from elements
                     opt=select.find("option",selected=True).text
                     names.append(opt)
                 
         
         
             #print(td.text)
+            
+    # Trasnforms Dats from raw text elements to those tyhat can be stored in a pandas dataframe.
     
     col_header = [x for x in col_header if(x != '') and (x != '\xa0')]
+    # Drops spaces and empty elements
     years = [x for x in years if('\n' not in x) and ('\xa0' not in x) and (x != '') and (x != 'YE') and (x != 'Annualized')]
     rows_index_lst = [sub[0] for sub in rows_index_lst ]
 #print(col_header)
@@ -121,6 +131,9 @@ def formatCashFlows(link,deal):
     for segment in segments:segment.append('% of EGI')
     arrays=[years,segments,names]
     lst=[]
+    
+    # create a multindexed dataframe with three header columns
+    
     tuples = list(zip(*arrays))
     for t in tuples:
         for e in range(len(t[1])):
@@ -143,6 +156,9 @@ def formatCashFlows(link,deal):
     cash['Deal Name']= deal
 
 #del tuple
+
+#Creates final dataframe and saves it to CSV file.
+
     cash.drop(columns={x for x in index if ('Adj' in x) | ('Adjusted' in x)}, inplace=True)
     cash.to_csv(deal+'.csv')
     #cash
@@ -150,6 +166,7 @@ def formatCashFlows(link,deal):
 
 # In[5]:
 
+# Drops corrupted or missing data
 
 deals=[]
 deal_codes=[]
@@ -172,6 +189,7 @@ deals.remove('KK 102219 LN 01')
 
 # In[12]:
 
+# Navigates website and extracts target links containing needed data. 
 
 def getCashFlowLink(link, deal):
     driver.get(link)
@@ -211,6 +229,7 @@ deals[463]
 rent_links=[]
 base_link = 'https://systima.northshoresystems.com/NorthshoreWeb/NS/Header/ModulePipeline.aspx'
 
+# Loops through all 500 items in the system, gets their respective links, scrapes the data, and saves the files.
 for deal in deals:
     formatCashFlows(getCashFlowLink(base_link, deal),deal)
 
