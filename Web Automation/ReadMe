@@ -1,2 +1,2 @@
-This Python Script was designed to Automate data exctaction from a CRM service that did not support a useable API. 
-It works with the Selenium package which using an automated window of chrome running  invisibly in the background, would use the site's API to download nesseary files, rename them and place them in a specific file path to be used for later reports and data analysis.
+These projects are meant to tranform data extracted from disparate sources, in perpartion for upload to a server, in an ETL framework.
+This data can then be automatically downloaded and used to create automated reports, in Excel and Word, including automated visulaizations. 
