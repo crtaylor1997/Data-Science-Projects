@@ -2,7 +2,8 @@
 # coding: utf-8
 
 # In[2]:
-#This alggorythm takes monthly data file, and transforms them into the correct shape to be uploaded to 
+#This algorithm takes legacy information stored in Excel on an onsite server, and transforms them into the correct shape to be uploaded to 
+#a remote server using Python Pandas.
 
 import pandas as pd
 from fuzzywuzzy import fuzz
