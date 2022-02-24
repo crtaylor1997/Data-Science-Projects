@@ -4,6 +4,7 @@
 # In[1]:
 
 
+# This Program tkaes data from the US Census and Raj Chetty's oppurtunity Index and cmbj-ines it with Shapefiles in order to create rich, multiayered interactive maps using folium.
 
 tract_vars=pd.read_csv('tract_covariates.csv')
 tract_vars.columns
