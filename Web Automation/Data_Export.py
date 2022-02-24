@@ -37,7 +37,7 @@ import shutil
 
 def ExportData(count):   
     # Connect to DataSource
-    PATH = 'C:\\Users\\christian.taylor\\Northshore_Scripts\\chromedriver.exe'
+    PATH = 'C:\\Users\\chromedriver.exe'
     options = Options()
     options.add_argument('--no-sandbox')
     options.add_argument('headless')
@@ -45,11 +45,11 @@ def ExportData(count):
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
     driver = webdriver.Chrome(PATH,options=options)
-    params = {'behavior': 'allow', 'downloadPath': 'C:\\Users\\christian.taylor\\Downloads'}
-    downloadPath= 'C:\\Users\\christian.taylor\\Downloads'
+    params = {'behavior': 'allow', 'downloadPath': 'C:\\Users\\Downloads'}
+    downloadPath= 'C:\\Users\\\\Downloads'
     driver.get('https://app.dealcloud.com/Account/Login')
-    USERNAME = "Christian.Taylor@systimacapital.com"
-    PASSWORD = "dealCloud123!"
+    USERNAME = ""
+    PASSWORD = ""
     email=driver.find_element_by_id("Email")
     email.send_keys(USERNAME)
     page_source=driver.page_source
