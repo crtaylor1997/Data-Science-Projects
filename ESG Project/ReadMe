@@ -1,0 +1,3 @@
+This project contains Data Analysis and Visulaization that attempts to qunatify the affect that afforable housing development has on low income neighborhodds.
+I used data friom the U.S. Census and from the Raj chetty Oppurtunity index, as well to calculate summary statistics and create interactive maps and visulaitzatios
+with python and Javascript.
