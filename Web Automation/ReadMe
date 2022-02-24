@@ -1,1 +1,2 @@
-This Python Script was designed to Automate data exctaction from a CRM service that did not support a useable API. It wrks with the Selenium package which using an automated window of chrome running  invisibly in the background, would use the site's API to download nesseary files, rename them and place them in a specific file path to be used for later reports and data analysis.
+This Python Script was designed to Automate data exctaction from a CRM service that did not support a useable API. 
+It works with the Selenium package which using an automated window of chrome running  invisibly in the background, would use the site's API to download nesseary files, rename them and place them in a specific file path to be used for later reports and data analysis.
