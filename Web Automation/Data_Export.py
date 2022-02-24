@@ -3,6 +3,9 @@
 
 # In[17]:
 
+#This Python Script was designed to Automate data exctaction from a CRM service that did not support a useable API. 
+#It works with the Selenium package which using an automated window of Chrome running  invisibly in the background. 
+#It uses the site's UI to download nesseary files, rename them and place them in a specific file path to be used for later reports and data analysis.
 
 
 from selenium import webdriver
@@ -115,6 +118,7 @@ def ExportData(count):
     element.click()
     
     # Verify files were correctly downloaded and move to data warehouse for processing
+    
     files = sorted(os.listdir(downloadPath), key=lambda x: os.path.getctime(os.path.join(downloadPath, x)))
     dealcloud_files=files[-4:]
    
