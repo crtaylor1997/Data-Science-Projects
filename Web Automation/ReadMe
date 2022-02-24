@@ -1,3 +1,3 @@
 These projects are meant to tranform data extracted from disparate sources, in prepartion for upload to a server, in an ETL framework.
-This data can then be automatically downloaded and used to create automated reports, in Excel and Word, including automated visualizations. 
+This data can then be automatically downloaded and used to create automated reports in Excel and Word, including automated visualizations. 
 Click on a file and see the read me at the top of the page for a short description of its purpose.
