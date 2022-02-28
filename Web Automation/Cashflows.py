@@ -3,8 +3,15 @@
 
 # In[2]:
 
-# This Program uses selenium to automate Chrome to naviigate to a website, use a drop down menu to extract navigate to links showing an unexportable table with raw data.
-# Using Beautful Soup and the data link, these tables are scraped and saved into CSV files that can be manipulated using Pandas and MS Excel.
+
+
+# This Program uses selenium to automate Chrome to navigate to a website, use a drop-down menu to extract navigate to links showing an unexportable table with raw data.
+# Using Beautiful Soup and the data link, these tables are scraped and saved into CSV files that can be manipulated using Pandas and MS Excel.
+	
+
+
+
+
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -117,7 +124,7 @@ def formatCashFlows(link,deal):
         
             #print(td.text)
             
-    # Trasnforms Dats from raw text elements to those tyhat can be stored in a pandas dataframe.
+    # Transforms Data from raw text elements to those that can be stored in a Pandas dataframe.
     
     col_header = [x for x in col_header if(x != '') and (x != '\xa0')]
     # Drops spaces and empty elements
