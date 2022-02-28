@@ -10,12 +10,13 @@
 # In[345]:
 
 
-# This Python script transforms a rountinely recived dataset, that contains information on the credit ratings
-# of different securities. The intial dataset contains several ratings per security based on
+#This Python script transforms a routinely received dataset, that contains information on the credit ratings
+# of different securities. The initial dataset contains several ratings per security based on
 #the tranche and rating company. This data is stored as a block of text. The script takes these text blocks,
-#tokenizes them into lists with regex, and splits the lists into different rows based on the trache.
-# This format contains only one piece of information per cell, so it is easier to upload and manipualte
-#in a realtional database.
+#tokenizes them into lists with regex, and splits the lists into different rows based on the tranche.
+# This format contains only one piece of information per cell, so it is easier to upload and manipulate
+#in a relational database.
+
  
 
 import pandas as pd
