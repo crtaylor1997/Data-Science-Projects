@@ -8,14 +8,16 @@ import re
 
 conn = pyodbc.connect(r'redacted)
 cursor = conn.cursor()
+
+date = '2023-07-31'
+nbd = '2023-07-31'
 #pd.set_option('display.max_columns',None)
 x=pd.read_sql_query("SELECT * FROM tbvFIHoldingsEODCurrent WHERE AsOfDate="+date,conn)
 m=pd.read_sql_query("SELECT Cusip,CurrencyName,CurrencyCode,	FirmCodeCategory FROM redacted",conn)
 y = pd.read_sql_query("SELECT AsOfDate,CusipForShort,localnotional,notionalToUse,custodianaccountnumber	 FROM redacted WHERE AsOfDate="+nbd,conn)
 k= pd.read_sql_query("SELECT * FROM tbvSecurityMaster",conn)
 
-date = '2023-07-31'
-nbd = '2023-07-31'
+
 
 
 y['AsOfDate'] = date
