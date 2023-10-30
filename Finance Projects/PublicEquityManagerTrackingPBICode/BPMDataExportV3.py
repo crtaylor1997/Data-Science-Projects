@@ -124,33 +124,33 @@ def CalcBenchmarks(BMK_PATH,early_date):
 
     #Calculate Custom Benchmarks
 
-    ######## ValueAct custom BMK###################################################################################################################################################
+    ######## x custom BMK###################################################################################################################################################
 
     MSCI_US=TransformPositionData(BMK_PATH,'MSCI USA - Daily.csv',early_date)
     MSCI_US_MID_VALUE = TransformPositionData(BMK_PATH,'MSCI USA MID VALUE - Daily.csv',early_date)
     MSCI_US_MID_VALUE['Portfolio (%)'] = MSCI_US_MID_VALUE['Portfolio (%)']*0.5
     MSCI_US['Portfolio (%)'] = MSCI_US['Portfolio (%)']*0.5
-    ValueAct_custom_BMK=pd.concat([MSCI_US_MID_VALUE,MSCI_US])
+    x_custom_BMK=pd.concat([MSCI_US_MID_VALUE,MSCI_US])
 
 
-    ######## Emminence custom BMK ###################################################################################################################################################
+    ######## y custom BMK ###################################################################################################################################################
 
     MSCI_US_MIDCAP = TransformPositionData(BMK_PATH,'MSCI USA MID CAP - Daily.csv',early_date)
     MSCI_US=TransformPositionData(BMK_PATH,'MSCI USA - Daily.csv',early_date)
     MSCI_US['Portfolio (%)'] = MSCI_US['Portfolio (%)']*0.3
     MSCI_US_MIDCAP['Portfolio (%)'] = MSCI_US_MIDCAP['Portfolio (%)']*0.7
-    Emminence_custom_BMK = pd.concat([MSCI_US,MSCI_US_MIDCAP])
+    y_custom_BMK = pd.concat([MSCI_US,MSCI_US_MIDCAP])
 
-    ################# Janchor custom BMK ################################################################################################################################################
+    ################# z custom BMK ################################################################################################################################################
 
     MSCI_AP = TransformPositionData(BMK_PATH,'MSCI AC ASIA PACIFIC - Daily.csv',early_date)
     MSCI_ASIA_EX_JAPAN = TransformPositionData(BMK_PATH,'MSCI AC ASIA ex JAPAN - Daily.csv',early_date)
     MSCI_AP['Portfolio (%)'] = MSCI_AP['Portfolio (%)']*0.5
     MSCI_ASIA_EX_JAPAN['Portfolio (%)'] = MSCI_ASIA_EX_JAPAN['Portfolio (%)']*0.5
 
-    janchor_custom_bmk = pd.concat([MSCI_AP,MSCI_ASIA_EX_JAPAN])
+    z_custom_bmk = pd.concat([MSCI_AP,MSCI_ASIA_EX_JAPAN])
 
-    ##################################### Petra Custom BMK ################################################################################################################################
+    ##################################### a Custom BMK ################################################################################################################################
     MSCI_KOREA = TransformPositionData(BMK_PATH,'MSCI KOREA - Daily.csv',early_date)
     if early_date < '2023-06-01':
         
@@ -159,17 +159,17 @@ def CalcBenchmarks(BMK_PATH,early_date):
         MSCI_KOREA_SMALLCAP = MSCI_KOREA_SMALLCAP[MSCI_KOREA_SMALLCAP['Date']<'2023-06-01']
         MSCI_KOREA = MSCI_KOREA[MSCI_KOREA['Date']>'2023-06-01']
 
-        petra_custom_bmk = pd.concat([MSCI_KOREA_SMALLCAP,MSCI_KOREA])
+        a_custom_bmk = pd.concat([MSCI_KOREA_SMALLCAP,MSCI_KOREA])
     
     else:
-        petra_custom_bmk = MSCI_KOREA
+        a_custom_bmk = MSCI_KOREA
 
     #Create Dict of b_Name of benchmarks to Transformed dataframes
     Benchmarks = {filename.split('.')[0].strip():TransformPositionData(BMK_PATH,filename,early_date) for filename in os.listdir(BMK_PATH)}
-    Benchmarks['ValueAct Custom Benchmark'] = ValueAct_custom_BMK
-    Benchmarks['Emminence Custom Benchmark'] = Emminence_custom_BMK 
-    Benchmarks['Janchor Opp Custom BM'] = janchor_custom_bmk
-    Benchmarks['Petra Custom Benchmark'] = petra_custom_bmk
+    Benchmarks['ValueAct Custom Benchmark'] = x_custom_BMK
+    Benchmarks['Emminence Custom Benchmark'] = y_custom_BMK 
+    Benchmarks['Janchor Opp Custom BM'] = z_custom_bmk
+    Benchmarks['Petra Custom Benchmark'] = a_custom_bmk
     
     return Benchmarks
 
