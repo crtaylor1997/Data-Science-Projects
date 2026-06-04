@@ -437,7 +437,7 @@ address = info_HUD['proj_add'].astype("str").tolist()
 city = info_HUD['proj_cty'].astype("str").tolist()
 state= info_HUD['proj_st'].astype("str").tolist()
 len(lat)
-API_key = 'f384a61966d2f2600f6ee1c13849fa6f'
+
 #HUD_walk_8000=walk_score(lat,lng,address,city,state)
 #len(lat)
 
@@ -571,7 +571,7 @@ class BindColormap(MacroElement):
 
 from branca.colormap import linear
 gdf_bay.set_crs(epsg=4326,inplace=True)
-m = folium.Map([38.9072,-77.0369], zoom_start=6,tiles='pk.eyJ1IjoiY2hyaXN0aWFudGF5bG9yMTk5NyIsImEiOiJja3FiZjA1YzUwMGE2MnBxcjhwaXVmdW14In0.B1QUQs22K92RZEfaWXm-Ug')
+m = folium.Map([38.9072,-77.0369], zoom_start=6,tiles='')
 
 #Build the map and legend with folium, load in a custom tileset.
 
